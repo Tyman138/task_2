@@ -9,6 +9,7 @@ import io.github.tyman138.task2.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -24,8 +25,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findById(Long id) {
-        return carRepository.findById(id).orElseThrow(NullPointerException::new);
+    public Car findById(long carId) {
+        return carRepository.findById(carId).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -35,8 +36,8 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public void saveCarsFromFile(Long fileId) {
-        DataBaseInfoFile dataBaseInfoFile = fileRepository.findById(fileId).orElseThrow(NullPointerException::new);
+    public void saveCarsFromFile(long fileId) {
+        DataBaseInfoFile dataBaseInfoFile = fileRepository.findById(fileId).orElseThrow(EntityNotFoundException::new);
         carRepository.saveAll(
                 new Parser().ParseList(
                         new CustomFileReader()
@@ -46,15 +47,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car updateCarColorOnly(Long id, Car carColorOnly) {
-        Car car = findById(id);
+    public Car updateCarColorOnly(long carId, Car carColorOnly) {
+        Car car = findById(carId);
         car.setColor(carColorOnly.getColor());
         return carRepository.save(car);
 
     }
 
     @Override
-    public void delete(Long id) {
-        carRepository.deleteById(id);
+    public void delete(long carId) {
+        carRepository.deleteById(carId);
     }
 }

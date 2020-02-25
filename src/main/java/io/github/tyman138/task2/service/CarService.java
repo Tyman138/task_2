@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CarService { //fixme переделай названия
     List<Car> findAll();
-    Car findById(Long id);
+    Car findById(long carId);
     void save(Car car);
-    void saveCarsFromFile(Long fileId);
-    Car updateCarColorOnly(Long id,Car carColorOnly);
-    void delete(Long id);
+    void saveCarsFromFile(long fileId);
+    Car updateCarColorOnly(long carId,Car carColorOnly);
+    void delete(long carId);
 }

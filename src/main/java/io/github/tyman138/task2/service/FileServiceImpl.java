@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class FileServiceImpl implements FileService {
     @Autowired
@@ -17,7 +19,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public DataBaseInfoFile findById(Long id) {
-        return fileRepository.findById(id).orElseThrow(NullPointerException::new);
+        return fileRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

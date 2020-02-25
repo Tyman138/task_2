@@ -5,7 +5,6 @@ import io.github.tyman138.task2.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,33 +18,33 @@ public class CarsController {
         return carService.findAll();
     }
 
-    @GetMapping("{id}")
-    public Car findCarById(@PathVariable(value = "id") Long id) {
-        return carService.findById(id);
+    @GetMapping("{carId}")
+    public Car findCarById(@PathVariable long carId) {
+        return carService.findById(carId);
     }
 
     @PostMapping
-    public void saveCar(@Valid @RequestBody Car car) {
+    public void saveCar(@RequestBody Car car) {
         carService.save(car);
     }
 
     @PutMapping()
-    public void changeCar(@Valid @RequestBody Car car) {
+    public void changeCar(@RequestBody Car car) {
         carService.save(car);
     }
 
-    @PatchMapping("{id}")
-    public Car changeCarColor(@PathVariable(value = "id") Long id, @RequestBody Car carColorOnly) {
-        return carService.updateCarColorOnly(id, carColorOnly);
+    @PatchMapping("{carId}")
+    public Car changeCarColor(@PathVariable long carId, @RequestBody Car carColorOnly) {
+        return carService.updateCarColorOnly(carId, carColorOnly);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteCar(@PathVariable(value = "id") Long id) {
-        carService.delete(id);
+    @DeleteMapping("{carId}")
+    public void deleteCar(@PathVariable long carId) {
+        carService.delete(carId);
     }
 
     @PostMapping("/job/{fileId}")
-    public void saveCarsFromFile(@PathVariable(value = "fileId") Long fileId) {
+    public void saveCarsFromFile(@PathVariable long fileId) {
         carService.saveCarsFromFile(fileId);
     }
 }
