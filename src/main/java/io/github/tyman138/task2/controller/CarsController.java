@@ -2,7 +2,6 @@ package io.github.tyman138.task2.controller;
 
 import io.github.tyman138.task2.entity.Car;
 import io.github.tyman138.task2.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +9,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/cars")
 public class CarsController {
-    @Autowired
+
     private CarService carService;
+
+    public CarsController(CarService carService) {
+        this.carService = carService;
+    }
 
     @GetMapping
     public List<Car> findAllCars() {

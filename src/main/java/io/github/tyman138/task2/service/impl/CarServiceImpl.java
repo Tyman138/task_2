@@ -1,4 +1,4 @@
-package io.github.tyman138.task2.service;
+package io.github.tyman138.task2.service.impl;
 
 import io.github.tyman138.task2.entity.Car;
 import io.github.tyman138.task2.entity.DataBaseInfoFile;
@@ -6,7 +6,7 @@ import io.github.tyman138.task2.fileReader.CustomFileReader;
 import io.github.tyman138.task2.parser.Parser;
 import io.github.tyman138.task2.repository.CarRepository;
 import io.github.tyman138.task2.repository.FileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.github.tyman138.task2.service.CarService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,10 +14,14 @@ import java.util.List;
 
 @Service
 public class CarServiceImpl implements CarService {
-    @Autowired
+
     private CarRepository carRepository;
-    @Autowired
     private FileRepository fileRepository;
+
+    public CarServiceImpl(CarRepository carRepository, FileRepository fileRepository) {
+        this.carRepository = carRepository;
+        this.fileRepository = fileRepository;
+    }
 
     @Override
     public List<Car> findAll() {

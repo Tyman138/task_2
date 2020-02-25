@@ -8,8 +8,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class FileController {
-    @Autowired
-    FileService fileService;
+    private FileService fileService;
+
+    public FileController(FileService fileService) {
+        this.fileService = fileService;
+    }
+
     @PostMapping("/cars/upload")
     public void handleFileUpload(@RequestParam("file") MultipartFile file){
         fileService.save(file);

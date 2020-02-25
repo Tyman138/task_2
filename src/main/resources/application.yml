@@ -1,6 +1,8 @@
 DbFile:
   path: C:\\Users\\Tyman\\Documents\\Database Files\\
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     database: postgresql
     show-sql: true
