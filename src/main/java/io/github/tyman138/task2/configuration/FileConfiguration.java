@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FileConfiguration {
+
     @Autowired
     private FileService fileService;
+
     @Autowired
     private FileRepository fileRepository;
 
@@ -26,8 +28,4 @@ public class FileConfiguration {
         return new FileController(fileService);
     }
 
-    @Bean
-    public DataBaseFileValidator dataBaseFileValidator() {
-        return new DataBaseFileValidator(fileService);
-    }
 }

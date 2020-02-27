@@ -2,6 +2,7 @@ package io.github.tyman138.task2.controller;
 
 import io.github.tyman138.task2.entity.Car;
 import io.github.tyman138.task2.service.CarService;
+import io.github.tyman138.task2.service.FileService;
 import io.github.tyman138.task2.validator.CarValidator;
 import io.github.tyman138.task2.validator.DataBaseFileValidator;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,24 +16,24 @@ import java.util.List;
 public class CarsController {
 
     private CarService carService;
-    private DataBaseFileValidator dataBaseFileValidator;
-    private CarValidator carValidator;
 
-    public CarsController(CarService carService, DataBaseFileValidator dataBaseFileValidator, CarValidator carValidator) {
+    private FileService fileService;
+
+
+    public CarsController(CarService carService, FileService fileService) {
         this.carService = carService;
-        this.dataBaseFileValidator = dataBaseFileValidator;
-        this.carValidator = carValidator;
+        this.fileService = fileService;
     }
 
     @InitBinder({"fileId"})
     private void setDataBaseFileValidator(WebDataBinder binder) {
-        binder.setValidator(dataBaseFileValidator);
+        binder.setValidator(new DataBaseFileValidator(fileService));
         binder.setBindEmptyMultipartFiles(false);
     }
 
     @InitBinder({"carId"})
     private void setCarValidator(WebDataBinder binder) {
-        binder.setValidator(carValidator);
+        binder.setValidator(new CarValidator(carService));
     }
 
     @GetMapping
