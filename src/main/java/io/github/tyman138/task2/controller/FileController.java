@@ -1,8 +1,9 @@
 package io.github.tyman138.task2.controller;
 
 import io.github.tyman138.task2.service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -15,7 +16,7 @@ public class FileController {
     }
 
     @PostMapping("/cars/upload")
-    public void handleFileUpload(@RequestParam("file") MultipartFile file){
+    public void handleFileUpload(@RequestParam("file") MultipartFile file) {
         fileService.save(file);
     }
 }

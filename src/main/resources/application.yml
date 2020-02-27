@@ -1,5 +1,3 @@
-DbFile:
-  path: C:\\Users\\Tyman\\Documents\\Database Files\\
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -7,8 +5,10 @@ spring:
     database: postgresql
     show-sql: true
     hibernate:
-      ddl-auto: update
+    ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/cars
     username: postgres
     password: root
+db-file:
+  path: C:\\Users\\Tyman\\Documents\\Database Files\\

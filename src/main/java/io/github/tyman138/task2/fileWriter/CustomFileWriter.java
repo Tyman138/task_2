@@ -9,7 +9,7 @@ public class CustomFileWriter {
     public void writeToFile(MultipartFile multipartFile, String path) {
         if (!multipartFile.isEmpty()) {
             try {
-                multipartFile.transferTo(Path.of(path+multipartFile.getOriginalFilename()));
+                multipartFile.transferTo(Path.of(path + multipartFile.getOriginalFilename()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

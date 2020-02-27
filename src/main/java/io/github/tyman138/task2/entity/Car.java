@@ -1,20 +1,36 @@
 package io.github.tyman138.task2.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name ="Cars")
+@Table(name = "Cars")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Column
+    @NotNull
+    @Length(min = 2, max = 25)
     private String mark;
+
     @Column
+    @NotNull
+    @Min(1767)
     private int year;
+
     @Column
+    @NotNull
+    @Length(min = 4, max = 50)
     private String color;
+
     @Column
+    @NotNull
+    @Length(min = 2, max = 50)
     private String countryFactory;
 
     public Car() {

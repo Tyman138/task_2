@@ -1,6 +1,9 @@
 package io.github.tyman138.task2.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Files")
@@ -9,8 +12,12 @@ public class DataBaseInfoFile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column
+    @NotNull
+    @Length(min = 3, max = 255)
     private String path;
     @Column
+    @NotNull
+    @Length(min = 1, max = 255)
     private String name;
 
     public DataBaseInfoFile() {
