@@ -1,10 +1,13 @@
 package io.github.tyman138.task2.controller;
 
 import io.github.tyman138.task2.entity.Car;
+import io.github.tyman138.task2.filter.CarFilter;
 import io.github.tyman138.task2.service.CarService;
 import io.github.tyman138.task2.service.FileService;
 import io.github.tyman138.task2.validator.CarValidator;
 import io.github.tyman138.task2.validator.DataBaseFileValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +40,8 @@ public class CarsController {
     }
 
     @GetMapping
-    public List<Car> findAllCars() {
-        return carService.findAll();
+    public Page<Car> findAllCars(CarFilter carFilter, Pageable pageable) {
+        return carService.findAll(carFilter, pageable);
     }
 
     @GetMapping("{carId}")

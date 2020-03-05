@@ -3,10 +3,15 @@ package io.github.tyman138.task2.service.impl;
 import io.github.tyman138.task2.entity.Car;
 import io.github.tyman138.task2.entity.DataBaseInfoFile;
 import io.github.tyman138.task2.fileReader.CustomFileReader;
+import io.github.tyman138.task2.filter.CarFilter;
 import io.github.tyman138.task2.parser.Parser;
 import io.github.tyman138.task2.repository.CarRepository;
 import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.CarService;
+import io.github.tyman138.task2.specification.CarSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,8 +29,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> findAll() {
-        return carRepository.findAll();
+    public Page<Car> findAll(CarFilter carFilter,Pageable pageable) {
+        return carRepository.findAll(new CarSpecification(carFilter),pageable);
+
     }
 
     @Override
