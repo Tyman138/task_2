@@ -6,13 +6,14 @@ import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.CarService;
 import io.github.tyman138.task2.service.FileService;
 import io.github.tyman138.task2.service.impl.CarServiceImpl;
-import io.github.tyman138.task2.validator.CarValidator;
-import io.github.tyman138.task2.validator.DataBaseFileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
+//@EnableJpaRepositories(basePackages = "io.github.tyman138.task2.repository",repositoryBaseClass = io.github.tyman138.task2.repository.impl.DefaultRepositoryImpl.class)
 public class CarsConfiguration {
 
     @Autowired
@@ -34,7 +35,7 @@ public class CarsConfiguration {
 
     @Bean
     public CarsController carsController() {
-        return new CarsController(carService,fileService);
+        return new CarsController(carService, fileService);
     }
 
 }
