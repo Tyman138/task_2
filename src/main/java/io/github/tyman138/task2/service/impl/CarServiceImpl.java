@@ -10,12 +10,10 @@ import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.CarService;
 import io.github.tyman138.task2.specification.CarSpecification;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -29,8 +27,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Page<Car> findAll(CarFilter carFilter,Pageable pageable) {
-        return carRepository.findAll(new CarSpecification(carFilter),pageable);
+    public Page<Car> findAll(CarFilter carFilter, Pageable pageable) {
+        return carRepository.findAll(carFilter, pageable);
 
     }
 
