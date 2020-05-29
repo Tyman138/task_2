@@ -1,10 +1,8 @@
 package io.github.tyman138.task2.repository;
 
 import io.github.tyman138.task2.entity.Car;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificationExecutor<Car> {
+public interface CarRepository extends CrudRepository<Car, Long>, CustomCarRepository/*, JpaSpecificationExecutor<Car>*/ {
+
 }
