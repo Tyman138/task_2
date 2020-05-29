@@ -22,11 +22,11 @@ public class CarSpecification implements Specification<Car> {
     public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (carFilter.getMark()!=null) {
+        if (carFilter.getMark() != null) {
             predicates.add(criteriaBuilder.equal(root.get("mark"), carFilter.getMark()));
         }
 
-        if (carFilter.getColor()!=null) {
+        if (carFilter.getColor() != null) {
             predicates.add(criteriaBuilder.equal(root.get("color"), carFilter.getColor()));
         }
 
@@ -34,7 +34,7 @@ public class CarSpecification implements Specification<Car> {
             predicates.add(criteriaBuilder.equal(root.get("year"), carFilter.getYear()));
         }
 
-        if (carFilter.getCountryFactory()!=null) {
+        if (carFilter.getCountryFactory() != null) {
             predicates.add(criteriaBuilder.equal(root.get("countryFactory"), carFilter.getCountryFactory()));
         }
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
