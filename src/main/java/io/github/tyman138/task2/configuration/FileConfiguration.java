@@ -4,7 +4,6 @@ import io.github.tyman138.task2.controller.FileController;
 import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.FileService;
 import io.github.tyman138.task2.service.impl.FileServiceImpl;
-import io.github.tyman138.task2.validator.DataBaseFileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
