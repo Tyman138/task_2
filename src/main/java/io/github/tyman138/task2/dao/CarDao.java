@@ -7,9 +7,7 @@ import java.util.List;
 public interface CarDao {
     List<Car> findAll();
     Car findById(long carId);
-    void save(Car car);
-    void saveCarsFromFile(long fileId);
-    Car updateCarColorOnly(long carId, Car carColorOnly);
-    void delete(long carId);
-    boolean existById(long carId);
+    Car save(Car car);
+    void deleteById(long carId);
+    boolean existsById(long carId);
 }

@@ -32,12 +32,12 @@ public class CarsConfiguration {
 
     @Bean
     public CarService carService() {
-        return new CarServiceImpl(carRepository, fileRepository);
+        return new CarServiceImpl(carDao, fileRepository);
     }
 
     @Bean
     public CarsController carsController() {
-        return new CarsController(carService, fileService, carDao);
+        return new CarsController(carService, fileService);
     }
 
 }

@@ -2,24 +2,19 @@ package io.github.tyman138.task2.dao.impl;
 
 import io.github.tyman138.task2.dao.CarDao;
 import io.github.tyman138.task2.entity.Car;
-import io.github.tyman138.task2.entity.DataBaseInfoFile;
-import io.github.tyman138.task2.fileReader.CustomFileReader;
 import io.github.tyman138.task2.mapper.CarMapper;
-import io.github.tyman138.task2.mapper.FileMapper;
-import io.github.tyman138.task2.parser.Parser;
+import io.github.tyman138.task2.wrapper.NamedParameterJdbcTemplateWrapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.util.List;
 
 public class CarDaoImpl implements CarDao {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplateWrapper namedParameterJdbcTemplateWrapper;
 
-    public CarDaoImpl(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public CarDaoImpl(NamedParameterJdbcTemplateWrapper namedParameterJdbcTemplateWrapper) {
+        this.namedParameterJdbcTemplateWrapper = namedParameterJdbcTemplateWrapper;
     }
 
     @Override
@@ -29,7 +24,7 @@ public class CarDaoImpl implements CarDao {
                 "   * " +
                 "FROM " +
                 "   CARS ";
-        return namedParameterJdbcTemplate.query(SQL, new CarMapper());
+        return namedParameterJdbcTemplateWrapper.query(SQL, new CarMapper());
     }
 
     @Override
@@ -43,31 +38,26 @@ public class CarDaoImpl implements CarDao {
                 "  CARS " +
                 "WHERE " +
                 "  ID = :id";
-        return namedParameterJdbcTemplate.queryForObject(SQL, namedParameters, new CarMapper());
+        return namedParameterJdbcTemplateWrapper.queryForObject(SQL, namedParameters, new CarMapper());
     }
 
     @Override
-    public void save(Car car) {
+    public Car save(Car car) {
+        String SQL;
         if (car.getId() == 0) {
-            long id = namedParameterJdbcTemplate.getJdbcOperations().queryForObject(
+            long id = namedParameterJdbcTemplateWrapper.getJdbcOperations().queryForObject(
                     "SELECT " +
                             "NEXTVAL('hibernate_sequence')",
                     (resultSet, i) -> resultSet.getLong("nextval"));
-            String SQL = "" +
+            car.setId(id);
+            SQL = "" +
                     "INSERT " +
                     "INTO " +
                     "   CARS " +
                     "VALUES " +
                     "   (:id, :mark, :year, :color, :country_factory)";
-            SqlParameterSource namedParameters = new MapSqlParameterSource()
-                    .addValue("id", id)
-                    .addValue("mark", car.getMark())
-                    .addValue("year", car.getYear())
-                    .addValue("color", car.getColor())
-                    .addValue("country_factory", car.getCountryFactory());
-            namedParameterJdbcTemplate.update(SQL, namedParameters);
         } else {
-            String SQL = "" +
+            SQL = "" +
                     "Update " +
                     "   CARS " +
                     "SET " +
@@ -77,53 +67,19 @@ public class CarDaoImpl implements CarDao {
                     "   country_factory = :country_factory " +
                     "WHERE " +
                     "   ID = :id";
-            SqlParameterSource namedParameters = new MapSqlParameterSource()
-                    .addValue("id", car.getId())
-                    .addValue("mark", car.getMark())
-                    .addValue("year", car.getYear())
-                    .addValue("color", car.getColor())
-                    .addValue("country_factory", car.getCountryFactory());
-            namedParameterJdbcTemplate.update(SQL, namedParameters);
         }
-    }
-
-    @Override
-    public void saveCarsFromFile(long fileId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("id", fileId);
-        String SQL = "" +
-                "SELECT " +
-                "   * " +
-                "FROM " +
-                "   FILES " +
-                "WHERE " +
-                "   ID = :id";
-        DataBaseInfoFile dataBaseInfoFile = namedParameterJdbcTemplate.queryForObject(SQL, namedParameters, new FileMapper());
-        new Parser().ParseList(
-                new CustomFileReader()
-                        .readFileFromLocal(dataBaseInfoFile.getPath() + dataBaseInfoFile.getName())
-        ).forEach(this::save);
-    }
-
-    @Override
-    public Car updateCarColorOnly(long carId, Car carColorOnly) {
-        SqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("id", carId);
-        String SQL = "" +
-                "SELECT " +
-                "   * " +
-                "FROM " +
-                "   CARS " +
-                "WHERE " +
-                "   ID = :id";
-        Car car = namedParameterJdbcTemplate.queryForObject(SQL, namedParameters, new CarMapper());
-        car.setColor(carColorOnly.getColor());
-        this.save(car);
+                .addValue("id", car.getId())
+                .addValue("mark", car.getMark())
+                .addValue("year", car.getYear())
+                .addValue("color", car.getColor())
+                .addValue("country_factory", car.getCountryFactory());
+        namedParameterJdbcTemplateWrapper.update(SQL, namedParameters);
         return car;
     }
 
     @Override
-    public void delete(long carId) {
+    public void deleteById(long carId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource()
                 .addValue("id", carId);
         String SQL = "" +
@@ -132,12 +88,12 @@ public class CarDaoImpl implements CarDao {
                 "   CARS " +
                 "WHERE " +
                 "   ID = :id";
-        namedParameterJdbcTemplate.update(SQL, namedParameters);
+        namedParameterJdbcTemplateWrapper.update(SQL, namedParameters);
 
     }
 
     @Override
-    public boolean existById(long carId) {
+    public boolean existsById(long carId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource()
                 .addValue("id", carId);
         String SQL = "" +
@@ -147,6 +103,6 @@ public class CarDaoImpl implements CarDao {
                 "   CARS " +
                 "WHERE " +
                 "   ID = :id";
-        return namedParameterJdbcTemplate.query(SQL, namedParameters, ResultSet::next);
+        return namedParameterJdbcTemplateWrapper.query(SQL, namedParameters, ResultSet::next);
     }
 }

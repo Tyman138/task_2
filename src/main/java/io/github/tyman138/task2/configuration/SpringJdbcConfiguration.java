@@ -2,6 +2,7 @@ package io.github.tyman138.task2.configuration;
 
 import io.github.tyman138.task2.dao.CarDao;
 import io.github.tyman138.task2.dao.impl.CarDaoImpl;
+import io.github.tyman138.task2.wrapper.NamedParameterJdbcTemplateWrapper;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,12 @@ public class SpringJdbcConfiguration {
     }
 
     @Bean
+    public NamedParameterJdbcTemplateWrapper namedParameterJdbcTemplateWrapper() {
+        return new NamedParameterJdbcTemplateWrapper(dataSource());
+    }
+
+    @Bean
     public CarDao carDao() {
-        return new CarDaoImpl(dataSource());
+        return new CarDaoImpl(namedParameterJdbcTemplateWrapper());
     }
 }
