@@ -1,28 +1,27 @@
 package io.github.tyman138.task2.service.impl;
 
 import io.github.tyman138.task2.dao.CarDao;
+import io.github.tyman138.task2.dao.FileDao;
 import io.github.tyman138.task2.entity.Car;
 import io.github.tyman138.task2.entity.DataBaseInfoFile;
 import io.github.tyman138.task2.fileReader.CustomFileReader;
 import io.github.tyman138.task2.filter.CarFilter;
 import io.github.tyman138.task2.parser.Parser;
-import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.CarService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
 public class CarServiceImpl implements CarService {
 
     private CarDao carDao;
-    private FileRepository fileRepository;
+    private FileDao fileDao;
 
-    public CarServiceImpl(CarDao carDao, FileRepository fileRepository) {
+    public CarServiceImpl(CarDao carDao, FileDao fileDao) {
         this.carDao = carDao;
-        this.fileRepository = fileRepository;
+        this.fileDao = fileDao;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void saveCarsFromFile(long fileId) {
-        DataBaseInfoFile dataBaseInfoFile = fileRepository.findById(fileId).orElseThrow(EntityNotFoundException::new);
+        DataBaseInfoFile dataBaseInfoFile = fileDao.findById(fileId);
         new Parser().ParseList(
                 new CustomFileReader()
                         .readFileFromLocal(dataBaseInfoFile.getPath() + dataBaseInfoFile.getName())

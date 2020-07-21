@@ -13,6 +13,7 @@ public class FileMapper implements RowMapper<DataBaseInfoFile> {
         dataBaseInfoFile.setId(resultSet.getLong("id"));
         dataBaseInfoFile.setPath(resultSet.getString("path"));
         dataBaseInfoFile.setName(resultSet.getString("name"));
+        dataBaseInfoFile.setStatus(resultSet.getString("status"));
         return dataBaseInfoFile;
     }
 }

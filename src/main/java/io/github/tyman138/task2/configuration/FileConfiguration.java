@@ -1,6 +1,7 @@
 package io.github.tyman138.task2.configuration;
 
 import io.github.tyman138.task2.controller.FileController;
+import io.github.tyman138.task2.dao.FileDao;
 import io.github.tyman138.task2.repository.FileRepository;
 import io.github.tyman138.task2.service.FileService;
 import io.github.tyman138.task2.service.impl.FileServiceImpl;
@@ -15,11 +16,14 @@ public class FileConfiguration {
     private FileService fileService;
 
     @Autowired
+    private FileDao fileDao;
+
+    @Autowired
     private FileRepository fileRepository;
 
     @Bean
     public FileServiceImpl fileService() {
-        return new FileServiceImpl(fileRepository);
+        return new FileServiceImpl(fileDao);
     }
 
     @Bean
