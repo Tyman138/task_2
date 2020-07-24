@@ -9,18 +9,19 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProcessingInitiatorController {
 
     @Autowired
-    JobLauncher jobLauncher;
+    private JobLauncher jobLauncher;
 
     @Autowired
-    Job job;
+    private Job job;
 
-    @GetMapping("/init")
+    @PostMapping("/init")
     public void initProcessing() {
         try {
             jobLauncher.run(job, new JobParameters());
