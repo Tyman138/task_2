@@ -30,6 +30,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void save(DataBaseInfoFile dataBaseInfoFile) {
+        fileDao.save(dataBaseInfoFile);
+    }
+
+    @Override
     public void saveAll(List<MultipartFile> files) {
         for (MultipartFile multipartFile : files) {
             this.save(multipartFile);
@@ -37,7 +42,24 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void saveAllDataBaseInfoFile(List<DataBaseInfoFile> files) {
+        files.forEach(this::save);
+    }
+
+    @Override
     public boolean existById(long fileId) {
         return fileDao.existsById(fileId);
     }
+
+    @Override
+    public DataBaseInfoFile findById(long fileId) {
+        return fileDao.findById(fileId);
+    }
+
+    @Override
+    public List<DataBaseInfoFile> findAllByStatusLoaded() {
+        return fileDao.findAllByStatusLoaded();
+    }
+
+
 }

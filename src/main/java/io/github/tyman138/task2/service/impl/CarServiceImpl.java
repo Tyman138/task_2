@@ -40,6 +40,11 @@ public class CarServiceImpl implements CarService {
         carDao.save(car);
     }
 
+    @Override
+    public void saveAll(List<Car> carList) {
+        carList.forEach(this::save);
+    }
+
 
     @Override
     public void saveCarsFromFile(long fileId) {

@@ -14,6 +14,8 @@ public interface CarService {
 
     void save(Car car);
 
+    void saveAll(List<Car> carList);
+
     void saveCarsFromFile(long fileId);
 
     Car updateCarColorOnly(long carId, Car carColorOnly);

@@ -10,4 +10,5 @@ public interface FileDao {
     DataBaseInfoFile save(DataBaseInfoFile file);
     void saveAll(List<DataBaseInfoFile> files);
     boolean existsById(long fileId);
+    List<DataBaseInfoFile> findAllByStatusLoaded();
 }

@@ -63,7 +63,7 @@ public class FileDaoImpl implements FileDao {
                     "SET " +
                     "   path = :path," +
                     "   name = :name," +
-                    "   status = :status," +
+                    "   status = :status " +
                     "WHERE " +
                     "   ID = :id";
         }
@@ -93,5 +93,19 @@ public class FileDaoImpl implements FileDao {
                 "WHERE " +
                 "   ID = :id";
         return namedParameterJdbcTemplateWrapper.query(SQL, namedParameters, ResultSet::next);
+    }
+
+    @Override
+    public List<DataBaseInfoFile> findAllByStatusLoaded() {
+        SqlParameterSource namedParameters = new MapSqlParameterSource()
+                .addValue("status", "LOADED");
+        String SQL = "" +
+                "SELECT " +
+                "  * " +
+                "FROM " +
+                "  FILES " +
+                "WHERE " +
+                "  STATUS = :status";
+        return namedParameterJdbcTemplateWrapper.query(SQL, namedParameters, new FileMapper());
     }
 }

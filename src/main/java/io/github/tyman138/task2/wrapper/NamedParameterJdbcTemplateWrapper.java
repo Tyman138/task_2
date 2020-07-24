@@ -21,6 +21,10 @@ public class NamedParameterJdbcTemplateWrapper {
         return namedParameterJdbcTemplate.query(sql, rowMapper);
     }
 
+    public <T> List<T> query(String sql,SqlParameterSource paramSource, RowMapper<T> rowMapper) {
+        return namedParameterJdbcTemplate.query(sql, paramSource, rowMapper);
+    }
+
     public <T> T query(String sql, SqlParameterSource paramSource, ResultSetExtractor<T> rse) {
         return namedParameterJdbcTemplate.query(sql, paramSource, rse);
     }
