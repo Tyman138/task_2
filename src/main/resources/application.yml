@@ -11,5 +11,9 @@ spring:
     jdbc-url: jdbc:postgresql://localhost:5432/cars
     username: postgres
     password: root
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
 db-file:
   path: C:\\Users\\Tyman\\Documents\\Database Files\\
